@@ -106,7 +106,7 @@ public class Screens {
 
                 // Reports Menu
                 case "R":
-                    System.out.println("Reports Menu");
+                    reportsScreenMethod();
                     break;
 
                 // Return to Home Screen
@@ -153,29 +153,37 @@ public class Screens {
             switch (input.toUpperCase()){
 
                 // View all Transactions
-                case "A":
-                    System.out.println("Display all Transactions");
+                case "1":
+                    System.out.println("Month to Date");
                     break;
 
                 // View Account Deposits
-                case "D":
-                    System.out.println("To View Account Deposits");
+                case "2":
+                    System.out.println("Previous Month");
                     break;
 
                 // View Account Payments
-                case "P":
-                    System.out.println("To View Account Payments");
+                case "3":
+                    System.out.println("Year to Date ");
                     break;
 
                 // Reports Menu
-                case "R":
-                    System.out.println("Reports Menu");
+                case "4":
+                    System.out.println("Previous Year ");
                     break;
 
                 // Return to Home Screen
-                case "H":
-                    System.out.println("Returning Home...");
+                case "5":
+                    System.out.println("Search by Vendor ");
+                    break;
+                case "0":
+                    System.out.println("Returning to Reports Screen");
                     loopFlag = false;
+                    break;
+                case "H":
+                    System.out.println("Returning to Home Screen");
+                    loopFlag = false;
+                    homeScreen();
                     break;
 
                 // In case of invalid input. Default gives back an invalid input message.
