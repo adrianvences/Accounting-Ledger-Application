@@ -45,6 +45,7 @@ public class UtilMethods {
     public static void displayLedgerTransactions(){
 
         try {
+            //************************NEED TO SHOW FROM NEWEST TO OLDEST
             //FileReader to specify file location and read file
             FileReader fileReader = new FileReader("transactions.csv");
             // Buffered Reader to help read more lines of text
