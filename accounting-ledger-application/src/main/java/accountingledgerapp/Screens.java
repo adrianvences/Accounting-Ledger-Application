@@ -39,7 +39,7 @@ public class Screens {
 
                 // Make payment
                 case "P":
-                    System.out.println("Make a payment");
+                    Prompts.makePaymentPrompt();
                     break;
 
                 // Ledger view
@@ -88,7 +88,7 @@ public class Screens {
 
                 // View all Transactions
                 case "A":
-                    System.out.println("Display all Transactions");
+                    UtilMethods.displayLedgerTransactions();
                     break;
 
                 // View Account Deposits

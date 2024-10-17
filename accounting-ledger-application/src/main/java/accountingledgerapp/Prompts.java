@@ -22,27 +22,53 @@ public class Prompts {
     }
 
     public static void makeDepositPrompt(){
-        String[] depositInfo = new String[5];
-        String date = depositInfo[0] = dateStamp;
-        String time = depositInfo[1] = timeStamp;
-        String description = depositInfo[2] = promptMaker("Type in a description of this transaction.");
-        String vendor = depositInfo[3] = promptMaker("Type in Vendor Name.");
-        double depositParce = Double.parseDouble(depositInfo[4] = promptMaker("Insert Deposit Amount" ));
+        // Gets current date and time for transactions
+        String date  = dateStamp;
+        String time =  timeStamp;
 
-        Transaction transaction = new Transaction(date,time,description,vendor,depositParced);
+        // Prompts users for deposit description and stores it.
+        String description = promptMaker("Type in a description for this deposit.");
+        // Prompts user for vendor name for deposit and stores it
+        String vendor = promptMaker("Type in Vendor Name for this deposit.");
+        // Parses users deposit input into a double
+        double depositParsed = Double.parseDouble( promptMaker("Insert Deposit Amount" ));
+
+        // Makes a new instance of Transaction class and assigns values using constructor
+        Transaction transaction = new Transaction(date,time,description,vendor,depositParsed);
+        // Adds transaction object to transactionList ArrayList
         UtilMethods.transactionsList.add(transaction);
+        // Formats Deposit data String
         String transactionData = String.format(" %s | %s | %s | %s | %.2f \n",
                 transaction.getDate(), transaction.getTime(),transaction.getDescription(),transaction.getVendor(),transaction.getAmount());
+        // Writes String to csv file.
         UtilMethods.ledgerWriterMethod(transactionData);
     }
 
-//    public String homeScreenPrompt = ("""
-//                    *Welcome to the Accounting Ledger App*
-//                     ~ Enter
-//                     - D ) To Make a Deposit
-//                     - P ) To Make a Payment
-//                     - L ) To View Ledger
-//                     - X ) To exit.
-//                    """);
+    public static void makePaymentPrompt(){
+        // Gets current date and time for transactions
+        String date  = dateStamp;
+        String time =  timeStamp;
+
+        // Prompts users for payment description and stores it.
+        String description = promptMaker("Type in a Description for this Payment.");
+        // Prompts user for vendor name for payment and stores it
+        String vendor = promptMaker("Type in Vendor Name for this Payment.");
+        // Parses users payment input into a negative double
+        double paymentParced = -Double.parseDouble( promptMaker("Insert payment Amount" ));
+
+        // Makes a new instance of Transaction class and assigns values using constructor
+        Transaction transaction = new Transaction(date,time,description,vendor,paymentParced);
+        // Adds transaction object to transactionList ArrayList
+        UtilMethods.transactionsList.add(transaction);
+        // Formats payment data String
+        String transactionData = String.format(" %s | %s | %s | %s | %.2f \n",
+                transaction.getDate(), transaction.getTime(),transaction.getDescription(),transaction.getVendor(),transaction.getAmount());
+        // Writes String to csv file.
+        UtilMethods.ledgerWriterMethod(transactionData);
+    }
+
+
+
+
 
 }
