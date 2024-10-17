@@ -93,12 +93,12 @@ public class Screens {
 
                 // View Account Deposits
                 case "D":
-                    System.out.println("To View Account Deposits");
+                    UtilMethods.showDeposits();
                     break;
 
                 // View Account Payments
                 case "P":
-                    System.out.println("To View Account Payments");
+                    UtilMethods.showPayments();
                     break;
 
                 // Reports Menu

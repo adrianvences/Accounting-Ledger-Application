@@ -36,7 +36,7 @@ public class Prompts {
         // Makes a new instance of Transaction class and assigns values using constructor
         Transaction transaction = new Transaction(date,time,description,vendor,depositParsed);
         // Adds transaction object to transactionList ArrayList
-        UtilMethods.transactionsList.add(transaction);
+//        UtilMethods.transactionsList.add(transaction);
         // Formats Deposit data String
         String transactionData = String.format(" %s | %s | %s | %s | %.2f \n",
                 transaction.getDate(), transaction.getTime(),transaction.getDescription(),transaction.getVendor(),transaction.getAmount());
@@ -59,7 +59,7 @@ public class Prompts {
         // Makes a new instance of Transaction class and assigns values using constructor
         Transaction transaction = new Transaction(date,time,description,vendor,paymentParced);
         // Adds transaction object to transactionList ArrayList
-        UtilMethods.transactionsList.add(transaction);
+//        UtilMethods.transactionsList.add(transaction);
         // Formats payment data String
         String transactionData = String.format(" %s | %s | %s | %s | %.2f \n",
                 transaction.getDate(), transaction.getTime(),transaction.getDescription(),transaction.getVendor(),transaction.getAmount());
