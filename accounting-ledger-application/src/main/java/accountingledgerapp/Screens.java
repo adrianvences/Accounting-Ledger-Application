@@ -7,9 +7,6 @@ public class Screens {
     // Scanner to read user input from terminal
     static Scanner scanner = new Scanner(System.in);
 
-
-
-
     //****************************************************//
                    // Home Screen Method //
     public static void homeScreen(){
@@ -37,7 +34,7 @@ public class Screens {
 
                 // Make deposit
                 case "D":
-                    System.out.println("Make a deposit");
+                    Prompts.makeDepositPrompt();
                     break;
 
                 // Make payment
@@ -83,7 +80,7 @@ public class Screens {
                      - P ) To View Account Payments       -
                      - R ) Reports Menu                   -
                      - H ) Home Screen                    -
-                     --------------------------------------
+                    ---------------------------------------
                     """);
 
             // switch case with input toUpperCase for no error due to letter case.
@@ -136,7 +133,7 @@ public class Screens {
 
             // input variable that stores users input through promptMaker method for cleaner code.
             String input = Prompts.promptMaker("""
-                    -----------* Your Ledger *-------------
+                    -------------* Reports *---------------
                      ~ Enter                              -
                      - 1 ) Month to Date                  -
                      - 2 ) Previous Month                 -
