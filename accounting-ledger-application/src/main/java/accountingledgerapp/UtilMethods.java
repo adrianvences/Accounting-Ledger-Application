@@ -1,9 +1,6 @@
 package accountingledgerapp;
-
-
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class UtilMethods {
     // Transactions ArrayList to Store Ledger Information

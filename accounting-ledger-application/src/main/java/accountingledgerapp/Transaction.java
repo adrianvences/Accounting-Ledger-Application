@@ -1,9 +1,5 @@
 package accountingledgerapp;
 
-import java.sql.Time;
-import java.util.ArrayList;
-import java.util.Date;
-
 public class Transaction {
     private String date;
     private String time;
