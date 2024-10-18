@@ -149,34 +149,36 @@ public class Screens {
             // switch case with input toUpperCase for no error due to letter case.
             switch (input.toUpperCase()){
 
-                // View all Transactions
+                // Month to Date Case
                 case "1":
-                    System.out.println("Month to Date");
+                    UtilMethods.monthToDateMethod();
                     break;
 
-                // View Account Deposits
+                // Previous Month Case
                 case "2":
-                    System.out.println("Previous Month");
+                    UtilMethods.previousMonthMethod();
                     break;
 
-                // View Account Payments
+                // Year to Date Case
                 case "3":
-                    System.out.println("Year to Date ");
+                    UtilMethods.yearToDateMethod();
                     break;
 
-                // Reports Menu
+                // Previous Year Case
                 case "4":
-                    System.out.println("Previous Year ");
+                    UtilMethods.previousYearMethod();
                     break;
 
-                // Return to Home Screen
+                // Search by Vendor Case
                 case "5":
-                    System.out.println("Search by Vendor ");
+                    UtilMethods.searchByVendorMethod();
                     break;
+                // Back to Ledger Case Screen Case
                 case "0":
                     System.out.println("Returning to Reports Screen");
                     loopFlag = false;
                     break;
+                // Back to Home Screen Case
                 case "H":
                     System.out.println("Returning to Home Screen");
                     loopFlag = false;

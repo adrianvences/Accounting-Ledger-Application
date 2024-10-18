@@ -16,6 +16,7 @@ public class UtilMethods {
 
 
             //FileReader to specify file location and read file
+            transactionsList.clear();
             FileReader fileReader = new FileReader("transactions.csv");
             // Buffered Reader to help read more lines of text
             BufferedReader buffReader = new BufferedReader(fileReader);
@@ -67,9 +68,7 @@ public class UtilMethods {
 
 
 
-    // this method shows all deposits and payments
-    // will parse csv file
-    // will check last index and see if it is positive or neg
+    // Method to show Deposits only.
     public static void showDeposits(){
         try {
             // Holds deposit transactions
@@ -89,9 +88,10 @@ public class UtilMethods {
             }
             // sorts depositArray newest to oldest.
             newestToOldestTransaction(depositsArray);
+            depositsArray.clear();
 
         } catch (Exception e) {
-            e.getStackTrace();
+            e.printStackTrace();
             System.out.println("error here");
         }
     }
@@ -115,9 +115,10 @@ public class UtilMethods {
             }
             // sorts depositArray newest to oldest.
             newestToOldestTransaction(paymentsArray);
+            paymentsArray.clear();
 
         } catch (Exception e) {
-            e.getStackTrace();
+            e.printStackTrace();
             System.out.println("error here");
         }
     }
@@ -129,6 +130,123 @@ public class UtilMethods {
             System.out.println(arrayList.get(i));
         }
     }
+
+    public static void monthToDateMethod(){
+        // Loads transactions
+        try {
+            ArrayList<String> monthToDateArray = new ArrayList<>();
+            ArrayList<String> transactions = loadTransactions();
+            monthToDateArray.add(transactions.get(0));
+            for (int i = 1;i < transactions.size();i++) {
+                String transaction = transactions.get(i);
+                String[] transactionSplit = transactions.get(i).split("\\|");
+                String[] dateSplit = transactionSplit[0].split("-");
+                int month = Integer.parseInt(dateSplit[1]);
+                if(month == Prompts.month) {
+                    monthToDateArray.add(transaction);
+                }
+            }
+            newestToOldestTransaction(monthToDateArray);
+            monthToDateArray.clear();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void previousMonthMethod(){
+        // Loads transactions
+        try {
+            ArrayList<String> previousMonthArray = new ArrayList<>();
+            ArrayList<String> transactions = loadTransactions();
+            previousMonthArray.add(transactions.get(0));
+            for (int i = 1;i < transactions.size();i++) {
+                String transaction = transactions.get(i);
+                String[] transactionSplit = transactions.get(i).split("\\|");
+                String[] dateSplit = transactionSplit[0].split("-");
+                int month = Integer.parseInt(dateSplit[1]);
+                if((month) == (Prompts.month - 1)) {
+                    previousMonthArray.add(transaction);
+                }
+            }
+            newestToOldestTransaction(previousMonthArray);
+            previousMonthArray.clear();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void yearToDateMethod(){
+        // Loads transactions
+        try {
+            ArrayList<String> yearToDateArray = new ArrayList<>();
+            ArrayList<String> transactions = loadTransactions();
+            yearToDateArray.add(transactions.get(0));
+            for (int i = 1;i < transactions.size();i++) {
+                String transaction = transactions.get(i);
+                String[] transactionSplit = transactions.get(i).split("\\|");
+                String[] dateSplit = transactionSplit[0].split("-");
+                int year = Integer.parseInt(dateSplit[0].trim());
+                if((year) == (Prompts.year)) {
+                    yearToDateArray.add(transaction);
+                }
+            }
+            newestToOldestTransaction(yearToDateArray);
+            yearToDateArray.clear();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void previousYearMethod(){
+        // Loads transactions
+        try {
+            ArrayList<String> previousYearArray = new ArrayList<>();
+            ArrayList<String> transactions = loadTransactions();
+            previousYearArray.add(transactions.get(0));
+            for (int i = 1;i < transactions.size();i++) {
+                String transaction = transactions.get(i);
+                String[] transactionSplit = transactions.get(i).split("\\|");
+                String[] dateSplit = transactionSplit[0].split("-");
+                int year = Integer.parseInt(dateSplit[0].trim());
+                if((year) == (Prompts.year - 1)) {
+                    previousYearArray.add(transaction);
+                }
+            }
+            newestToOldestTransaction(previousYearArray);
+            previousYearArray.clear();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void searchByVendorMethod(){
+        // Loads transactions
+        try {
+            String vendorName = Prompts.promptMaker("Please enter vendors name you want to query.");
+            ArrayList<String> vendorTransactionArray = new ArrayList<>();
+            ArrayList<String> transactions = loadTransactions();
+            vendorTransactionArray.add(transactions.get(0));
+            for (int i = 1;i < transactions.size();i++) {
+                String transaction = transactions.get(i);
+                String[] transactionSplit = transactions.get(i).split("\\|");
+                String vendorNameData = transactionSplit[3].trim();
+                if(vendorName.equalsIgnoreCase(vendorNameData)) {
+                    vendorTransactionArray.add(transaction);
+                }
+            }
+            newestToOldestTransaction(vendorTransactionArray);
+            vendorTransactionArray.clear();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
 
 
 

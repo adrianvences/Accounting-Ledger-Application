@@ -12,6 +12,8 @@ public class Prompts {
     static DateTimeFormatter time = DateTimeFormatter.ofPattern("HH:mm:ss");
     static String timeStamp = today.format(time);
     static String dateStamp = today.format(date);
+    static int month = Integer.parseInt(dateStamp.split("-")[1]);
+    static int year = Integer.parseInt(dateStamp.split("-")[0]);
 
     // method for input that takes a prompt and prints it out and returns output
     public static String promptMaker(String prompt) {
@@ -21,6 +23,7 @@ public class Prompts {
         return Screens.scanner.nextLine();
     }
 
+    // Deposit method along with prompt
     public static void makeDepositPrompt(){
         // Gets current date and time for transactions
         String date  = dateStamp;
@@ -44,6 +47,7 @@ public class Prompts {
         UtilMethods.ledgerWriterMethod(transactionData);
     }
 
+    // PaymentMethod along with prompt
     public static void makePaymentPrompt(){
         // Gets current date and time for transactions
         String date  = dateStamp;
