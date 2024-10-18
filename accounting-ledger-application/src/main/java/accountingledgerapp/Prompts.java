@@ -1,9 +1,7 @@
 package accountingledgerapp;
-
-import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
+
 
 public class Prompts {
     // Date and Time stamp variables
@@ -26,53 +24,50 @@ public class Prompts {
     // Deposit method along with prompt
     public static void makeDepositPrompt(){
         // Gets current date and time for transactions
-        String date  = dateStamp;
-        String time =  timeStamp;
-
-        // Prompts users for deposit description and stores it.
-        String description = promptMaker("Type in a description for this deposit.");
-        // Prompts user for vendor name for deposit and stores it
-        String vendor = promptMaker("Type in Vendor Name for this deposit.");
-        // Parses users deposit input into a double
-        double depositParsed = Double.parseDouble( promptMaker("Insert Deposit Amount" ));
-
-        // Makes a new instance of Transaction class and assigns values using constructor
-        Transaction transaction = new Transaction(date,time,description,vendor,depositParsed);
-        // Adds transaction object to transactionList ArrayList
-//        UtilMethods.transactionsList.add(transaction);
-        // Formats Deposit data String
-        String transactionData = String.format(" %s | %s | %s | %s | %.2f \n",
-                transaction.getDate(), transaction.getTime(),transaction.getDescription(),transaction.getVendor(),transaction.getAmount());
-        // Writes String to csv file.
-        UtilMethods.ledgerWriterMethod(transactionData);
+        try {
+            String date = dateStamp;
+            String time = timeStamp;
+            // Prompts users for deposit description and stores it.
+            String description = promptMaker("Type in a description for this deposit.");
+            // Prompts user for vendor name for deposit and stores it
+            String vendor = promptMaker("Type in Vendor Name for this deposit.");
+            // Parses users deposit input into a double
+            double depositParsed = Double.parseDouble(promptMaker("Insert Deposit Amount"));
+            // Makes a new instance of Transaction class and assigns values using constructor
+            Transaction transaction = new Transaction(date, time, description, vendor, depositParsed);
+            // Formats Deposit data String
+            String transactionData = String.format(" %s | %s | %s | %s | %.2f \n",
+                    transaction.getDate(), transaction.getTime(), transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
+            // Writes String to csv file.
+            UtilMethods.ledgerWriterMethod(transactionData);
+        } catch (NumberFormatException n){
+            n.printStackTrace();
+            System.out.println("Please insert a number");
+        }
     }
 
     // PaymentMethod along with prompt
     public static void makePaymentPrompt(){
-        // Gets current date and time for transactions
-        String date  = dateStamp;
-        String time =  timeStamp;
-
-        // Prompts users for payment description and stores it.
-        String description = promptMaker("Type in a Description for this Payment.");
-        // Prompts user for vendor name for payment and stores it
-        String vendor = promptMaker("Type in Vendor Name for this Payment.");
-        // Parses users payment input into a negative double
-        double paymentParced = -Double.parseDouble( promptMaker("Insert payment Amount" ));
-
-        // Makes a new instance of Transaction class and assigns values using constructor
-        Transaction transaction = new Transaction(date,time,description,vendor,paymentParced);
-        // Adds transaction object to transactionList ArrayList
-//        UtilMethods.transactionsList.add(transaction);
-        // Formats payment data String
-        String transactionData = String.format(" %s | %s | %s | %s | %.2f \n",
-                transaction.getDate(), transaction.getTime(),transaction.getDescription(),transaction.getVendor(),transaction.getAmount());
-        // Writes String to csv file.
-        UtilMethods.ledgerWriterMethod(transactionData);
+        try {
+            // Gets current date and time for transactions
+            String date = dateStamp;
+            String time = timeStamp;
+            // Prompts users for payment description and stores it.
+            String description = promptMaker("Type in a Description for this Payment.");
+            // Prompts user for vendor name for payment and stores it
+            String vendor = promptMaker("Type in Vendor Name for this Payment.");
+            // Parses users payment input into a negative double
+            double paymentParsed = -Double.parseDouble(promptMaker("Insert payment Amount"));
+            // Makes a new instance of Transaction class and assigns values using constructor
+            Transaction transaction = new Transaction(date, time, description, vendor, paymentParsed);
+            // Formats payment data String
+            String transactionData = String.format(" %s | %s | %s | %s | %.2f \n",
+                    transaction.getDate(), transaction.getTime(), transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
+            // Writes String to csv file.
+            UtilMethods.ledgerWriterMethod(transactionData);
+        } catch (NumberFormatException n) {
+            n.printStackTrace();
+            System.out.println("Please enter a number");
+        }
     }
-
-
-
-
-
 }

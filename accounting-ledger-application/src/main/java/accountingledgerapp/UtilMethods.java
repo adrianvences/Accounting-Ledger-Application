@@ -7,12 +7,13 @@ import java.util.Date;
 
 public class UtilMethods {
     // Transactions ArrayList to Store Ledger Information
-    static ArrayList<String> transactionsList = new ArrayList<>();
+    static ArrayList<Transaction> transactionsList = new ArrayList<>();
     static ArrayList<String> ledgerArray = new ArrayList<>();
 
 
+    // working on making this load objects
     // Adds to transactionList array
-    public static ArrayList<String> loadTransactions() throws IOException {
+    public static ArrayList<Transaction> loadTransactions() throws IOException {
 
 
             //FileReader to specify file location and read file
@@ -21,9 +22,18 @@ public class UtilMethods {
             // Buffered Reader to help read more lines of text
             BufferedReader buffReader = new BufferedReader(fileReader);
             String input;
+            buffReader.readLine();
+
             while ((input = buffReader.readLine()) != null) {
-                transactionsList.add(input);
+                String[] transactionSplit = input.split("\\|");
+                double amount = Double.parseDouble(transactionSplit[4]);
+                try {
+                    transactionsList.add(new Transaction(transactionSplit[0], transactionSplit[1], transactionSplit[2], transactionSplit[3],amount));
+                } catch (NumberFormatException n) {
+                    n.printStackTrace();
+                }
             }
+
             buffReader.close();
             return transactionsList;
 
@@ -72,17 +82,13 @@ public class UtilMethods {
     public static void showDeposits(){
         try {
             // Holds deposit transactions
-            ArrayList<String> depositsArray = new ArrayList<>();
+            ArrayList<Transaction> depositsArray = new ArrayList<>();
             // Loads transactions
-            ArrayList<String> transactions = loadTransactions();
-            // Adds Header
-            depositsArray.add(transactions.get(0));
+            ArrayList<Transaction> transactions = loadTransactions();
             // Loops through transactions skips header
-            for(int i = 1;i < transactions.size();i++){
-                String transaction = transactions.get(i);
-                String[] transactionParts = transaction.split("\\|");
-                double amountParser = Double.parseDouble(transactionParts[4]);
-                if(amountParser > 0) {
+            for (Transaction transaction : transactions) {
+                double amount = transaction.getAmount();
+                if (amount > 0) {
                     depositsArray.add(transaction);
                 }
             }
@@ -99,17 +105,13 @@ public class UtilMethods {
     public static void showPayments(){
         try {
             // Holds deposit transactions
-            ArrayList<String> paymentsArray = new ArrayList<>();
+            ArrayList<Transaction> paymentsArray = new ArrayList<>();
             // Loads transactions
-            ArrayList<String> transactions = loadTransactions();
-            // Adds Header
-            paymentsArray.add(transactions.get(0));
+            ArrayList<Transaction> transactions = loadTransactions();
             // Loops through transactions skips header
-            for(int i = 1;i < transactions.size();i++){
-                String transaction = transactions.get(i);
-                String[] transactionParts = transaction.split("\\|");
-                double amountParser = Double.parseDouble(transactionParts[4]);
-                if(amountParser < 0) {
+            for (Transaction transaction : transactions) {
+                double amount = transaction.getAmount();
+                if (amount < 0) {
                     paymentsArray.add(transaction);
                 }
             }
@@ -124,25 +126,24 @@ public class UtilMethods {
     }
 
 
-    public static void newestToOldestTransaction(ArrayList<String> arrayList) {
-        System.out.println(arrayList.get(0));
-        for (int i = arrayList.size() - 1; i >= 1; i--) {
-            System.out.println(arrayList.get(i));
+    public static void newestToOldestTransaction(ArrayList<Transaction> transactionsArrayList) {
+//        System.out.println(transactionsArrayList.get(0));
+        System.out.println("    Date      |    Time    |    Description   |   Vendor   |   Amount");
+        System.out.println(" --------------------------------------------------------------------");
+        for (int i = transactionsArrayList.size() - 1; i >= 0; i--) {
+            System.out.println(transactionsArrayList.get(i));
         }
     }
 
     public static void monthToDateMethod(){
         // Loads transactions
         try {
-            ArrayList<String> monthToDateArray = new ArrayList<>();
-            ArrayList<String> transactions = loadTransactions();
-            monthToDateArray.add(transactions.get(0));
-            for (int i = 1;i < transactions.size();i++) {
-                String transaction = transactions.get(i);
-                String[] transactionSplit = transactions.get(i).split("\\|");
-                String[] dateSplit = transactionSplit[0].split("-");
+            ArrayList<Transaction> monthToDateArray = new ArrayList<>();
+            ArrayList<Transaction> transactions = loadTransactions();
+            for (Transaction transaction : transactions) {
+                String[] dateSplit = transaction.getDate().split("-");
                 int month = Integer.parseInt(dateSplit[1]);
-                if(month == Prompts.month) {
+                if (month == Prompts.month) {
                     monthToDateArray.add(transaction);
                 }
             }
@@ -157,15 +158,12 @@ public class UtilMethods {
     public static void previousMonthMethod(){
         // Loads transactions
         try {
-            ArrayList<String> previousMonthArray = new ArrayList<>();
-            ArrayList<String> transactions = loadTransactions();
-            previousMonthArray.add(transactions.get(0));
-            for (int i = 1;i < transactions.size();i++) {
-                String transaction = transactions.get(i);
-                String[] transactionSplit = transactions.get(i).split("\\|");
-                String[] dateSplit = transactionSplit[0].split("-");
+            ArrayList<Transaction> previousMonthArray = new ArrayList<>();
+            ArrayList<Transaction> transactions = loadTransactions();
+            for (Transaction transaction : transactions) {
+                String[] dateSplit = transaction.getDate().split("-");
                 int month = Integer.parseInt(dateSplit[1]);
-                if((month) == (Prompts.month - 1)) {
+                if ((month) == (Prompts.month - 1)) {
                     previousMonthArray.add(transaction);
                 }
             }
@@ -180,15 +178,12 @@ public class UtilMethods {
     public static void yearToDateMethod(){
         // Loads transactions
         try {
-            ArrayList<String> yearToDateArray = new ArrayList<>();
-            ArrayList<String> transactions = loadTransactions();
-            yearToDateArray.add(transactions.get(0));
-            for (int i = 1;i < transactions.size();i++) {
-                String transaction = transactions.get(i);
-                String[] transactionSplit = transactions.get(i).split("\\|");
-                String[] dateSplit = transactionSplit[0].split("-");
+            ArrayList<Transaction> yearToDateArray = new ArrayList<>();
+            ArrayList<Transaction> transactions = loadTransactions();
+            for (Transaction transaction : transactions) {
+                String[] dateSplit = transaction.getDate().split("-");
                 int year = Integer.parseInt(dateSplit[0].trim());
-                if((year) == (Prompts.year)) {
+                if ((year) == (Prompts.year)) {
                     yearToDateArray.add(transaction);
                 }
             }
@@ -203,15 +198,12 @@ public class UtilMethods {
     public static void previousYearMethod(){
         // Loads transactions
         try {
-            ArrayList<String> previousYearArray = new ArrayList<>();
-            ArrayList<String> transactions = loadTransactions();
-            previousYearArray.add(transactions.get(0));
-            for (int i = 1;i < transactions.size();i++) {
-                String transaction = transactions.get(i);
-                String[] transactionSplit = transactions.get(i).split("\\|");
-                String[] dateSplit = transactionSplit[0].split("-");
+            ArrayList<Transaction> previousYearArray = new ArrayList<>();
+            ArrayList<Transaction> transactions = loadTransactions();
+            for (Transaction transaction : transactions) {
+                String[] dateSplit = transaction.getDate().split("-");
                 int year = Integer.parseInt(dateSplit[0].trim());
-                if((year) == (Prompts.year - 1)) {
+                if ((year) == (Prompts.year - 1)) {
                     previousYearArray.add(transaction);
                 }
             }
@@ -227,14 +219,11 @@ public class UtilMethods {
         // Loads transactions
         try {
             String vendorName = Prompts.promptMaker("Please enter vendors name you want to query.");
-            ArrayList<String> vendorTransactionArray = new ArrayList<>();
-            ArrayList<String> transactions = loadTransactions();
-            vendorTransactionArray.add(transactions.get(0));
-            for (int i = 1;i < transactions.size();i++) {
-                String transaction = transactions.get(i);
-                String[] transactionSplit = transactions.get(i).split("\\|");
-                String vendorNameData = transactionSplit[3].trim();
-                if(vendorName.equalsIgnoreCase(vendorNameData)) {
+            ArrayList<Transaction> vendorTransactionArray = new ArrayList<>();
+            ArrayList<Transaction> transactions = loadTransactions();
+            for (Transaction transaction : transactions) {
+                String vendorNameData = transaction.getVendor().trim();
+                if (vendorName.equalsIgnoreCase(vendorNameData)) {
                     vendorTransactionArray.add(transaction);
                 }
             }
